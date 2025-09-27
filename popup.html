@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Safety Scanner</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="header">
+        <div class="title">
+            <span class="icon">🛡️</span>
+            <h1>Safety Scanner</h1>
+        </div>
+    </div>
+    
+    <div class="content">
+        <div class="website-info">
+            <div class="current-site">
+                <span class="label">Current Site:</span>
+                <span class="url" id="current-url">Loading...</span>
+            </div>
+        </div>
+        
+        <div class="safety-score">
+            <div class="score-display">
+                <div class="score-circle" id="score-circle">
+                    <span class="score-number" id="score-number">--</span>
+                    <span class="score-text">Safety Score</span>
+                </div>
+            </div>
+            
+            <div class="status-indicator">
+                <span class="status-text" id="status-text">Analyzing...</span>
+                <div class="loading-spinner" id="loading-spinner"></div>
+            </div>
+        </div>
+        
+        <div class="threat-details" id="threat-details" style="display: none;">
+            <h3>Security Analysis</h3>
+            <div class="threat-item">
+                <span class="threat-label">Malware:</span>
+                <span class="threat-value" id="malware-status">Clean</span>
+            </div>
+            <div class="threat-item">
+                <span class="threat-label">Phishing:</span>
+                <span class="threat-value" id="phishing-status">Clean</span>
+            </div>
+            <div class="threat-item">
+                <span class="threat-label">Suspicious:</span>
+                <span class="threat-value" id="suspicious-status">Clean</span>
+            </div>
+            <div class="threat-item">
+                <span class="threat-label">Last Scan:</span>
+                <span class="threat-value" id="last-scan">--</span>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <button class="rescan-btn" id="rescan-btn">Rescan Website</button>
+        </div>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>

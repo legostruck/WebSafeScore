@@ -1,0 +1,14 @@
+{
+  "name": "website-safety-scanner",
+  "version": "1.0.0",
+  "description": "Chrome extension for website safety analysis",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "type": "module"
+}

@@ -1,0 +1,228 @@
+body {
+    width: 320px;
+    height: 480px;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    background: #f8f9fa;
+    overflow-x: hidden;
+}
+
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 16px;
+    text-align: center;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.title h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.icon {
+    font-size: 20px;
+}
+
+.content {
+    padding: 16px;
+}
+
+.website-info {
+    margin-bottom: 20px;
+}
+
+.current-site {
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e1e5e9;
+    font-size: 14px;
+}
+
+.label {
+    font-weight: 600;
+    color: #495057;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.url {
+    color: #0066cc;
+    word-break: break-all;
+    font-size: 12px;
+}
+
+.safety-score {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.score-display {
+    margin-bottom: 12px;
+}
+
+.score-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid #e1e5e9;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.score-circle.safe {
+    border-color: #28a745;
+    background: #f8fff9;
+}
+
+.score-circle.warning {
+    border-color: #ffc107;
+    background: #fffef8;
+}
+
+.score-circle.danger {
+    border-color: #dc3545;
+    background: #fff8f8;
+}
+
+.score-number {
+    font-size: 20px;
+    font-weight: bold;
+    color: #495057;
+}
+
+.score-text {
+    font-size: 10px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.status-text {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.status-text.safe {
+    color: #28a745;
+}
+
+.status-text.warning {
+    color: #ffc107;
+}
+
+.status-text.danger {
+    color: #dc3545;
+}
+
+.loading-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #e1e5e9;
+    border-top: 2px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.threat-details {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid #e1e5e9;
+    margin-bottom: 16px;
+}
+
+.threat-details h3 {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    color: #495057;
+    font-weight: 600;
+}
+
+.threat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.threat-item:last-child {
+    border-bottom: none;
+}
+
+.threat-label {
+    font-size: 12px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.threat-value {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.threat-value.clean {
+    color: #28a745;
+}
+
+.threat-value.detected {
+    color: #dc3545;
+}
+
+.threat-value.suspicious {
+    color: #ffc107;
+}
+
+.actions {
+    text-align: center;
+}
+
+.rescan-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    width: 100%;
+}
+
+.rescan-btn:hover {
+    background: #5a6fd8;
+}
+
+.rescan-btn:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+}
