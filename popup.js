@@ -3,6 +3,7 @@
 class SafetyScanner {
     constructor() {
         this.currentUrl = '';
+        this.currentHostname = '';
         this.init();
     }
 
@@ -16,8 +17,9 @@ class SafetyScanner {
         try {
             const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
             if (tab && tab.url) {
-                this.currentUrl = new URL(tab.url).hostname;
-                document.getElementById('current-url').textContent = this.currentUrl;
+                this.currentUrl = tab.url;
+                this.currentHostname = new URL(tab.url).hostname;
+                document.getElementById('current-url').textContent = this.currentHostname;
             }
         } catch (error) {
             console.error('Error getting current tab:', error);
@@ -55,8 +57,8 @@ class SafetyScanner {
 
     async getCachedResult() {
         try {
-            const result = await chrome.storage.local.get([this.currentUrl]);
-            return result[this.currentUrl];
+            const result = await chrome.storage.local.get([this.currentHostname]);
+            return result[this.currentHostname];
         } catch (error) {
             console.error('Error getting cached result:', error);
             return null;
@@ -73,7 +75,7 @@ class SafetyScanner {
     async cacheResult(result) {
         try {
             const cacheData = {
-                [this.currentUrl]: {
+                [this.currentHostname]: {
                     ...result,
                     timestamp: Date.now()
                 }
@@ -150,9 +152,9 @@ class SafetyScanner {
         let malware = false;
         let phishing = false;
 
-        if (knownSafeDomains.includes(this.currentUrl)) {
+        if (knownSafeDomains.includes(this.currentHostname)) {
             penalties = 0;
-        } else if (knownDangerousDomains.includes(this.currentUrl)) {
+        } else if (knownDangerousDomains.includes(this.currentHostname)) {
             penalties = 50;
             malware = true;
             phishing = true;
