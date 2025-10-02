@@ -39,13 +39,6 @@ Notes on reputation API
 - By default the server returns a deterministic mock. To integrate a real provider, set `REPUTATION_API_KEY` on the server and implement the provider forwarding in `server.js`.
 - Keeping API keys server-side avoids exposing them in the extension.
 
-Calibration
-- Use the Calibration sliders in the popup to tune weights for `ssl`, `reputation`, and `domain penalty multiplier` at runtime.
-- These settings are applied immediately for subsequent analyses.
 
-Next steps / optional improvements
-- Integrate a real reputation provider server-side (e.g., VirusTotal, Google Safe Browsing) and map their responses into the `domainReputation` shape.
-- Persist calibration settings in `chrome.storage.local` and expose an "export" option.
-- Add telemetry (opt-in) to collect mislabeled examples for automatic weight tuning.
 
 License: MIT
