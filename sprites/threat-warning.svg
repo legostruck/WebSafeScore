@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .pixel { shape-rendering: crispEdges; }
+  </style>
+  <!-- 8x8 pixel warning triangle -->
+  <path class="pixel" d="M7 2h2v2h2v2h2v6h-2v2h-6v-2h-2v-6h2v-2h2z" fill="#f2b705"/>
+  <path class="pixel" d="M7 6h2v4h-2z M7 11h2v2h-2z" fill="#06122b"/>
+</svg>

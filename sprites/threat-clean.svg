@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .pixel { shape-rendering: crispEdges; }
+  </style>
+  <!-- 8x8 pixel shield with checkmark -->
+  <path class="pixel" d="M4 2h8v2h2v8h-2v2h-8v-2h-2v-8h2z" fill="#a7d1ff"/>
+  <path class="pixel" d="M6 7h2v2h2v-2h2v2h-2v2h-2v-2h-2z" fill="#06122b"/>
+</svg>
