@@ -272,7 +272,8 @@ class SafetyScanner {
         if (name === 'safe') {
             this._weights = { ssl: 1.0, reputation: 0.6, domainPenaltyMultiplier: 0.6, urlPatternMultiplier: 0.6 };
         } else if (name === 'strict') {
-            this._weights = { ssl: 1.2, reputation: 1.2, domainPenaltyMultiplier: 1.4, urlPatternMultiplier: 1.2 };
+            // strict mode (tuned): more conservative – lowers reputation contribution and increases penalties
+            this._weights = { ssl: 0.85, reputation: 0.5, domainPenaltyMultiplier: 2.0, urlPatternMultiplier: 1.8 };
         } else { // balanced
             this._weights = { ssl: 1.0, reputation: 1.0, domainPenaltyMultiplier: 1.0, urlPatternMultiplier: 1.0 };
         }
