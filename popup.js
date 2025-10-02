@@ -471,13 +471,23 @@ class SafetyScanner {
     toggleExplanation() {
         const panel = document.getElementById('explanation-panel');
         const list = document.getElementById('score-breakdown');
+        const explainBtn = document.getElementById('explain-btn');
         if (!panel || !list) return;
 
         if (panel.style.display === 'block') {
-            panel.style.animation = 'slideUp 0.3s ease-out';
+            panel.style.opacity = '0';
+            panel.style.transform = 'translateY(-10px)';
+            explainBtn.classList.remove('active');
             setTimeout(() => { panel.style.display = 'none'; }, 300);
             return;
         }
+
+        panel.style.display = 'block';
+        explainBtn.classList.add('active');
+        // Force reflow to trigger transition
+        void panel.offsetWidth;
+        panel.style.opacity = '1';
+        panel.style.transform = 'translateY(0)';
 
         // populate breakdown using structured data from the last result
         list.innerHTML = '';

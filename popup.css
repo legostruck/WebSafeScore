@@ -79,10 +79,19 @@ html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,system-ui,Arial
 .pixel-btn.ghost{background:transparent;border:3px dashed #a7d1ff;color:#a7d1ff}
 .preset-row{display:flex;gap:8px;align-items:center}
 .current-text{margin-left:auto;font-size:11px;color:#cfe8ff}
-.explain-panel{margin-top:10px;background:#06203a;border:3px solid #083b68;padding:8px;border-radius:4px}
-.breakdown-list{list-style:none;padding:0;margin:6px 0}
-.breakdown-list li{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed rgba(255,255,255,0.04);font-size:12px}
-.threats-mini{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;font-size:11px}
+.explain-panel{margin-top:10px;background:#06203a;border:3px solid #083b68;padding:12px;border-radius:4px;transition:all 0.3s ease-out;opacity:1;transform:translateY(0)}
+.explain-panel[style*="display: none"] {opacity:0;transform:translateY(-10px)}
+#confidence-display{color:#a7d1ff;font-size:14px;margin-bottom:12px;text-align:center;padding:4px;border-bottom:2px solid #083b68}
+.breakdown-list{list-style:none;padding:0;margin:12px 0;display:flex;flex-direction:column;gap:8px}
+.breakdown-list li{display:flex;justify-content:space-between;padding:6px;border-radius:4px;font-size:12px;background:rgba(8,59,104,0.3)}
+.breakdown-list li:hover{background:rgba(8,59,104,0.5)}
+.item-key{color:#cfe8ff;flex:1;margin-right:12px}
+.item-val{font-weight:bold;font-family:monospace}
+.item-val.positive{color:#86efac}
+.item-val.negative{color:#ef4444}
+.item-val.neutral{color:#a7d1ff}
+.threats-mini{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;font-size:11px;padding:8px;border-radius:4px;background:rgba(8,59,104,0.3)}
+.threats-mini > div {display:flex;justify-content:space-between;align-items:center;color:#cfe8ff}
 .threat-value{display:inline-flex;align-items:center}
 .threat-value::before{content:'';display:inline-block;width:16px;height:16px;margin-right:4px;background-size:contain;background-repeat:no-repeat}
 .threat-value.clean::before{background-image:url('sprites/threat-clean.svg')}
@@ -91,6 +100,17 @@ html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,system-ui,Arial
 
 /* pixel border effect */
 .game-box:after{content:'';position:absolute;pointer-events:none}
+
+/* Panel animations */
+@keyframes slideDown {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-10px); opacity: 0; }
+}
 
 /* Sprite animations and effects */
 @keyframes corner-pulse {
