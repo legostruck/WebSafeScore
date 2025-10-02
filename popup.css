@@ -50,12 +50,16 @@ html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,system-ui,Arial
 
 /* 8-bit gamified styles */
 @font-face {
-  font-family: 'PressStart2P';
-  src: local('Courier New');
+  font-family: 'Press Start 2P Local';
+  src: url('fonts/PressStart2P-Regular.woff2') format('woff2'),
+       url('fonts/PressStart2P-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 .game-box{width:360px;padding:12px;background:#06122b;border:6px solid #f2b705;border-radius:8px;box-shadow:8px 8px 0 rgba(0,0,0,0.5)}
 .pixel-font { font-family: 'Press Start 2P', 'PressStart2P', monospace; }
-.pixel-bg{background:linear-gradient(#6b8cff,#8bc7ff);font-family: 'Press Start 2P', 'PressStart2P', monospace;color:#fff}
+.pixel-bg{background:linear-gradient(#6b8cff,#8bc7ff);font-family: 'Press Start 2P Local', 'Press Start 2P', 'PressStart2P', monospace;color:#fff}
 .game-box{width:360px;padding:12px;background:#06122b;border:6px solid #f2b705;border-radius:8px;box-shadow:8px 8px 0 rgba(0,0,0,0.5)}
 .top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .logo{font-size:12px;color:#f2b705;letter-spacing:2px}

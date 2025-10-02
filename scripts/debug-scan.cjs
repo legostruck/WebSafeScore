@@ -1,4 +1,5 @@
 const { computeScoreFromFactors } = require('../lib/score.cjs');
+const presets = require('../lib/presets.cjs');
 
 const samples = [
   { url: 'https://google.com', hostname: 'google.com' },
@@ -7,11 +8,6 @@ const samples = [
   { url: 'https://unknown-site.xyz', hostname: 'unknown-site.xyz' }
 ];
 
-const presets = {
-  safe: { ssl: 1.0, reputation: 0.6, domainPenaltyMultiplier: 0.6, urlPatternMultiplier: 0.6 },
-  balanced: { ssl: 1.0, reputation: 1.0, domainPenaltyMultiplier: 1.0, urlPatternMultiplier: 1.0 },
-  strict: { ssl: 1.2, reputation: 1.2, domainPenaltyMultiplier: 1.4, urlPatternMultiplier: 1.2 }
-};
 
 function checkFactors(url, hostname) {
   const ssl = url.startsWith('https://');

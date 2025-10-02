@@ -4,6 +4,19 @@ class SafetyScanner {
     constructor() {
         this.currentUrl = '';
         this.currentHostname = '';
+        // load shared presets when available (node/script env). Browser will fall back to built-in values.
+        this._presets = null;
+        try {
+            // CommonJS preset module
+            // eslint-disable-next-line global-require
+            this._presets = require('./lib/presets.cjs');
+        } catch (e) {
+            try {
+                // ESM import path (if running under import)
+                // note: dynamic import may not be supported in some extension contexts
+                // ignore failures and fall back to inline defaults
+            } catch (err) { /* ignore */ }
+        }
         this._weights = { ssl: 1, reputation: 1, domainPenaltyMultiplier: 1, urlPatternMultiplier: 1 };
         this.init();
     }
@@ -268,14 +281,19 @@ class SafetyScanner {
     applyPreset(name) {
         // allow options: { persist: true/false, triggerRescan: true/false }
         const opts = (typeof arguments[1] === 'object' && arguments[1]) ? arguments[1] : { persist: true, triggerRescan: true };
-        // presets adjust weights
-        if (name === 'safe') {
-            this._weights = { ssl: 1.0, reputation: 0.6, domainPenaltyMultiplier: 0.6, urlPatternMultiplier: 0.6 };
-        } else if (name === 'strict') {
-            // strict mode (tuned): more conservative – lowers reputation contribution and increases penalties
-            this._weights = { ssl: 0.85, reputation: 0.5, domainPenaltyMultiplier: 2.0, urlPatternMultiplier: 1.8 };
-        } else { // balanced
-            this._weights = { ssl: 1.0, reputation: 1.0, domainPenaltyMultiplier: 1.0, urlPatternMultiplier: 1.0 };
+        // presets adjust weights. Prefer shared presets module if available.
+        if (this._presets && this._presets[name]) {
+            this._weights = Object.assign({}, this._presets[name]);
+        } else {
+            // fallback inline presets
+            if (name === 'safe') {
+                this._weights = { ssl: 1.0, reputation: 0.6, domainPenaltyMultiplier: 0.6, urlPatternMultiplier: 0.6 };
+            } else if (name === 'strict') {
+                // strict mode (tuned): more conservative – lowers reputation contribution and increases penalties
+                this._weights = { ssl: 0.85, reputation: 0.5, domainPenaltyMultiplier: 2.0, urlPatternMultiplier: 1.8 };
+            } else { // balanced
+                this._weights = { ssl: 1.0, reputation: 1.0, domainPenaltyMultiplier: 1.0, urlPatternMultiplier: 1.0 };
+            }
         }
 
         // persist selection if requested
