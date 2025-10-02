@@ -76,7 +76,8 @@ class SafetyBackground {
         ];
 
         if (knownSafeDomains.includes(hostname)) {
-            return 100;
+            // Known large/trusted sites get a high score but not absolute 100
+            return 95;
         }
 
         // Check cache first

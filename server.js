@@ -54,6 +54,24 @@ app.get('/api/safety/:domain', (req, res) => {
     });
 });
 
+// Reputation proxy endpoint - returns deterministic mock when no API key provided
+app.get('/api/reputation/:domain', async (req, res) => {
+    const { domain } = req.params;
+    const apiKey = process.env.REPUTATION_API_KEY;
+    if (!apiKey) {
+        // Deterministic mock: keywords increase penalties
+        let penalties = 0, malware = false, phishing = false;
+        if (/phish|fraud|scam|malware|fake/.test(domain)) { penalties += 50; malware = true; }
+        if (/verify|login|account|secure/.test(domain)) { penalties += 20; phishing = true; }
+        penalties = Math.min(penalties, 60);
+        return res.json({ domain, penalties, malware, phishing, source: 'mock' });
+    }
+
+    // Placeholder for real provider forwarding: implement server-side request to provider here.
+    // Keep keys on server; do not expose to the client.
+    return res.json({ domain, penalties: 0, malware: false, phishing: false, source: 'stub' });
+});
+
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`✅ Website Safety Scanner server running at http://0.0.0.0:${PORT}`);
     console.log(`📁 Serving Chrome extension files from: ${__dirname}`);
