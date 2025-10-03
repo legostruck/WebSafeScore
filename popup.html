@@ -1,55 +1,53 @@
 <!doctype html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>WebSafe — Compact</title>
-    <link rel="stylesheet" href="popup.css">
+    <title>WebSafe — Pixel Defender</title>
+  <link rel="stylesheet" href="popup.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   </head>
-  <body>
-    <main class="wrapper">
-      <header class="top">
-        <div class="brand">WebSafe</div>
-        <div id="current-url" class="site">Loading...</div>
-      </header>
+  <body class="pixel-bg">
+    <div class="game-box">
+      <div class="top-row">
+        <div class="logo">PIXEL DEFENDER</div>
+        <div id="current-url" class="url">Loading...</div>
+      </div>
 
-      <section class="score-area">
-        <div id="score-circle" class="score-compact">
-          <div class="score-left">
-            <div id="score-number" class="score-value">--</div>
-            <div class="score-label">Safety</div>
-          </div>
-          <div id="score-emoji" class="emoji">🤔</div>
+      <div class="hud">
+        <div class="score-tile" id="score-circle">
+          <div class="score-pixel"> <span id="score-number">--</span></div>
+          <div class="score-label">SAFETY</div>
         </div>
-
-        <div class="meta-row">
-          <div id="status-text" class="status"> <span class="status-icon">🔍</span> <span class="status-message">Analyzing...</span></div>
-          <div id="confidence-badge" class="confidence">Confidence: --</div>
+        <div class="info">
+          <div id="score-emoji" class="pixel-emoji">�</div>
+          <div id="confidence-badge" class="pixel-small">Confidence: --</div>
+          <div id="status-text" class="pixel-small"><span class="status-message">Analyzing...</span></div>
         </div>
-      </section>
+      </div>
 
-      <section class="controls">
-        <button id="rescan-btn" class="btn primary">Check Again</button>
-        <div class="presets">
-          <button id="preset-safe" class="preset-btn">Safe</button>
-          <button id="preset-balanced" class="preset-btn">Balanced</button>
-          <button id="preset-strict" class="preset-btn">Strict</button>
-          <span class="current">Current: <span id="current-preset">Balanced</span></span>
+      <div class="controls">
+        <button id="rescan-btn" class="pixel-btn">RE-SCAN</button>
+        <div class="preset-row">
+          <button id="preset-safe" class="pixel-btn small">SAFE</button>
+          <button id="preset-balanced" class="pixel-btn small">BALANCED</button>
+          <button id="preset-strict" class="pixel-btn small">STRICT</button>
+          <div class="current-text">Preset: <span id="current-preset">Balanced</span></div>
         </div>
-        <button id="explain-btn" class="btn light">Show Details</button>
-      </section>
+        <button id="explain-btn" class="pixel-btn ghost">DETAILS</button>
+      </div>
 
-      <section id="explanation-panel" class="explain" style="display:none;">
+      <div id="explanation-panel" class="explain-panel" style="display:none;">
         <div id="confidence-display">Confidence: --</div>
-        <ul id="score-breakdown"></ul>
-        <div class="threats">
+        <ul id="score-breakdown" class="breakdown-list"></ul>
+        <div class="threats-mini">
           <div>Malware: <span id="malware-status">clean</span></div>
           <div>Phishing: <span id="phishing-status">clean</span></div>
           <div>Suspicious: <span id="suspicious-status">clean</span></div>
-          <div>Last scan: <span id="last-scan">--</span></div>
+          <div>Last: <span id="last-scan">--</span></div>
         </div>
-      </section>
-    </main>
+      </div>
+    </div>
 
     <script src="lib/score.browser.js"></script>
     <script src="popup.js"></script>

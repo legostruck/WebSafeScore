@@ -4,6 +4,19 @@ class SafetyScanner {
     constructor() {
         this.currentUrl = '';
         this.currentHostname = '';
+        // load shared presets when available (node/script env). Browser will fall back to built-in values.
+        this._presets = null;
+        try {
+            // CommonJS preset module
+            // eslint-disable-next-line global-require
+            this._presets = require('./lib/presets.cjs');
+        } catch (e) {
+            try {
+                // ESM import path (if running under import)
+                // note: dynamic import may not be supported in some extension contexts
+                // ignore failures and fall back to inline defaults
+            } catch (err) { /* ignore */ }
+        }
         this._weights = { ssl: 1, reputation: 1, domainPenaltyMultiplier: 1, urlPatternMultiplier: 1 };
         this.init();
     }
@@ -268,13 +281,19 @@ class SafetyScanner {
     applyPreset(name) {
         // allow options: { persist: true/false, triggerRescan: true/false }
         const opts = (typeof arguments[1] === 'object' && arguments[1]) ? arguments[1] : { persist: true, triggerRescan: true };
-        // presets adjust weights
-        if (name === 'safe') {
-            this._weights = { ssl: 1.0, reputation: 0.6, domainPenaltyMultiplier: 0.6, urlPatternMultiplier: 0.6 };
-        } else if (name === 'strict') {
-            this._weights = { ssl: 1.2, reputation: 1.2, domainPenaltyMultiplier: 1.4, urlPatternMultiplier: 1.2 };
-        } else { // balanced
-            this._weights = { ssl: 1.0, reputation: 1.0, domainPenaltyMultiplier: 1.0, urlPatternMultiplier: 1.0 };
+        // presets adjust weights. Prefer shared presets module if available.
+        if (this._presets && this._presets[name]) {
+            this._weights = Object.assign({}, this._presets[name]);
+        } else {
+            // fallback inline presets
+            if (name === 'safe') {
+                this._weights = { ssl: 1.0, reputation: 0.6, domainPenaltyMultiplier: 0.6, urlPatternMultiplier: 0.6 };
+            } else if (name === 'strict') {
+                // strict mode (tuned): more conservative – lowers reputation contribution and increases penalties
+                this._weights = { ssl: 0.85, reputation: 0.5, domainPenaltyMultiplier: 2.0, urlPatternMultiplier: 1.8 };
+            } else { // balanced
+                this._weights = { ssl: 1.0, reputation: 1.0, domainPenaltyMultiplier: 1.0, urlPatternMultiplier: 1.0 };
+            }
         }
 
         // persist selection if requested
@@ -420,9 +439,15 @@ class SafetyScanner {
         const malwareEl = document.getElementById('malware-status');
         const phishingEl = document.getElementById('phishing-status');
         const suspiciousEl = document.getElementById('suspicious-status');
-        if (malwareEl) { malwareEl.textContent = threats.malware; malwareEl.className = `threat-value ${threats.malware}`; }
-        if (phishingEl) { phishingEl.textContent = threats.phishing; phishingEl.className = `threat-value ${threats.phishing}`; }
-        if (suspiciousEl) { suspiciousEl.textContent = threats.suspicious; suspiciousEl.className = `threat-value ${threats.suspicious}`; }
+        const threatsEl = document.getElementById('threats-mini');
+        if (threatsEl) {
+            threatsEl.innerHTML = `
+                <div><span class="threat-label">Malware:</span><span class="threat-status">${threats.malware}</span></div>
+                <div><span class="threat-label">Phishing:</span><span class="threat-status">${threats.phishing}</span></div>
+                <div><span class="threat-label">Suspicious:</span><span class="threat-status">${threats.suspicious}</span></div>
+                <div><span class="threat-label">Last:</span><span class="threat-status">${new Date(lastScan).toLocaleTimeString([], {hour: 'numeric', minute:'2-digit', hour12: true}).replace(' ','')}h</span></div>
+            `;
+        }
         const spinner = document.getElementById('loading-spinner');
         const details = document.getElementById('threat-details');
         const rescan = document.getElementById('rescan-btn');
@@ -452,13 +477,27 @@ class SafetyScanner {
     toggleExplanation() {
         const panel = document.getElementById('explanation-panel');
         const list = document.getElementById('score-breakdown');
+        const explainBtn = document.getElementById('explain-btn');
         if (!panel || !list) return;
 
         if (panel.style.display === 'block') {
-            panel.style.animation = 'slideUp 0.3s ease-out';
+            panel.style.opacity = '0';
+            panel.style.transform = 'translateY(-10px)';
+            panel.style.background = 'transparent';
+            panel.style.borderColor = 'transparent';
+            explainBtn.classList.remove('active');
             setTimeout(() => { panel.style.display = 'none'; }, 300);
             return;
         }
+
+        panel.style.display = 'block';
+        panel.style.background = '#06122b';
+        panel.style.borderColor = '#f2b705';
+        explainBtn.classList.add('active');
+        // Force reflow to trigger transition
+        void panel.offsetWidth;
+        panel.style.opacity = '1';
+        panel.style.transform = 'translateY(0)';
 
         // populate breakdown using structured data from the last result
         list.innerHTML = '';

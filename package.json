@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
+    "fetch-font": "node scripts/fetch-font.cjs",
   "test": "node test/score.test.cjs && node test/score.breakdown.test.cjs"
   },
   "dependencies": {

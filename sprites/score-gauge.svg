@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="80" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .pixel { shape-rendering: crispEdges; }
+    .score-bg { fill: #0b2a4a; }
+    .score-border { fill: #f2b705; }
+    .score-notch { fill: #083b68; }
+  </style>
+  <!-- Pixel art gauge background -->
+  <path class="pixel score-bg" d="M0 0h120v80h-120z"/>
+  <!-- Border frame -->
+  <path class="pixel score-border" d="M0 0h120v4h-120z M0 76h120v4h-120z M0 0h4v80h-4z M116 0h4v80h-4z"/>
+  <!-- Corner notches -->
+  <path class="pixel score-notch" d="M4 4h8v4h4v4h-8v-4h-4z M108 4h8v4h-4v4h-8v-4h4z M4 68h4v4h8v4h-12z M108 68h4v4h-8v4h-4v-8z"/>
+  <!-- Inner score panel -->
+  <path class="pixel score-bg" d="M16 16h88v48h-88z"/>
+  <path class="pixel score-border" d="M16 16h88v4h-88z M16 60h88v4h-88z M16 16h4v48h-4z M100 16h4v48h-4z"/>
+</svg>
