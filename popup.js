@@ -439,9 +439,15 @@ class SafetyScanner {
         const malwareEl = document.getElementById('malware-status');
         const phishingEl = document.getElementById('phishing-status');
         const suspiciousEl = document.getElementById('suspicious-status');
-        if (malwareEl) { malwareEl.textContent = threats.malware; malwareEl.className = `threat-value ${threats.malware}`; }
-        if (phishingEl) { phishingEl.textContent = threats.phishing; phishingEl.className = `threat-value ${threats.phishing}`; }
-        if (suspiciousEl) { suspiciousEl.textContent = threats.suspicious; suspiciousEl.className = `threat-value ${threats.suspicious}`; }
+        const threatsEl = document.getElementById('threats-mini');
+        if (threatsEl) {
+            threatsEl.innerHTML = `
+                <div><span class="threat-label">Malware:</span><span class="threat-status">${threats.malware}</span></div>
+                <div><span class="threat-label">Phishing:</span><span class="threat-status">${threats.phishing}</span></div>
+                <div><span class="threat-label">Suspicious:</span><span class="threat-status">${threats.suspicious}</span></div>
+                <div><span class="threat-label">Last:</span><span class="threat-status">${new Date(lastScan).toLocaleTimeString([], {hour: 'numeric', minute:'2-digit', hour12: true}).replace(' ','')}h</span></div>
+            `;
+        }
         const spinner = document.getElementById('loading-spinner');
         const details = document.getElementById('threat-details');
         const rescan = document.getElementById('rescan-btn');
@@ -477,12 +483,16 @@ class SafetyScanner {
         if (panel.style.display === 'block') {
             panel.style.opacity = '0';
             panel.style.transform = 'translateY(-10px)';
+            panel.style.background = 'transparent';
+            panel.style.borderColor = 'transparent';
             explainBtn.classList.remove('active');
             setTimeout(() => { panel.style.display = 'none'; }, 300);
             return;
         }
 
         panel.style.display = 'block';
+        panel.style.background = '#06122b';
+        panel.style.borderColor = '#f2b705';
         explainBtn.classList.add('active');
         // Force reflow to trigger transition
         void panel.offsetWidth;
