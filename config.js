@@ -1,7 +1,7 @@
 // Configuration for security services
 export const config = {
-    // Google Safe Browsing API - Get key from: https://console.cloud.google.com/
-    SAFE_BROWSING_API_KEY: 'YOUR_GOOGLE_API_KEY',
+    // Google Safe Browsing API
+    SAFE_BROWSING_API_KEY: 'AIzaSyDG2Z4SPQAH3c2kgap9QNXcp4ubKX5cn4k',
 
     // Example Domain Reputation Services
     // 1. VirusTotal - Get key from: https://www.virustotal.com/gui/join-us
