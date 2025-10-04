@@ -6,11 +6,12 @@
   "permissions": [
     "activeTab",
     "storage",
-    "scripting"
+    "scripting",
+    "webRequest"
   ],
   "host_permissions": [
-    "https://www.virustotal.com/*",
-    "https://virustotal.com/*",
+    "https://safebrowsing.googleapis.com/*",
+    "https://domain-reputation-api.example.com/*",
     "http://*/*",
     "https://*/*"
   ],

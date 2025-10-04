@@ -44,9 +44,15 @@ class SafetyBackground {
 
     async handlePageLoaded(pageData, sender) {
         try {
-            // Store page data for analysis
+            const securityChecker = new SecurityChecker();
+            const securityResults = await securityChecker.checkAllSecurity(pageData.url);
+            
+            // Store security results along with page data
             await chrome.storage.local.set({
-                [`page_${sender.tab.id}`]: pageData
+                [`page_${sender.tab.id}`]: {
+                    ...pageData,
+                    security: securityResults
+                }
             });
 
             // Update badge with safety status if needed
@@ -68,18 +74,6 @@ class SafetyBackground {
     }
 
     async quickSafetyCheck(hostname) {
-        // Quick safety assessment for badge display
-        const knownSafeDomains = [
-            'google.com', 'github.com', 'stackoverflow.com',
-            'mozilla.org', 'microsoft.com', 'apple.com',
-            'wikipedia.org', 'youtube.com', 'linkedin.com'
-        ];
-
-        if (knownSafeDomains.includes(hostname)) {
-            // Known large/trusted sites get a high score but not absolute 100
-            return 95;
-        }
-
         // Check cache first
         try {
             const cached = await chrome.storage.local.get([hostname]);
@@ -90,7 +84,27 @@ class SafetyBackground {
             console.error('Error checking cache:', error);
         }
 
-        // Return neutral score for unknown domains
+        try {
+            const securityChecker = new SecurityChecker();
+            const url = `https://${hostname}`;
+            const results = await securityChecker.checkAllSecurity(url);
+            
+            if (results) {
+                // Cache the results
+                await chrome.storage.local.set({
+                    [hostname]: {
+                        score: results.score,
+                        timestamp: Date.now(),
+                        security: results
+                    }
+                });
+                return results.score;
+            }
+        } catch (error) {
+            console.error('Security check error:', error);
+        }
+
+        // Return neutral score if checks fail
         return 75;
     }
 
